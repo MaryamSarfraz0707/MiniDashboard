@@ -66,6 +66,7 @@ const CreateProduct = () => {
     navigate("/dashboard/products");
   };
 
+  // Image Handling
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;

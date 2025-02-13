@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { LogOut, Boxes, Package,LayoutDashboard } from "lucide-react";
 
+// eslint-disable-next-line react/prop-types
 const Sidebar = ({ onLogout }) => {
 	return (
 		<div className="h-screen w-64 bg-[#17A5EF] text-white p-4  flex flex-col">

@@ -1,12 +1,21 @@
+/* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-	const [user, setUser] = useState(() => {
-		return JSON.parse(localStorage.getItem("user")) || null;
-	});
+	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(true); // Loading state added
+
+	// Load user from localStorage on initial render
+	useEffect(() => {
+		const storedUser = JSON.parse(localStorage.getItem("user"));
+		if (storedUser) {
+			setUser(storedUser);
+		}
+		setLoading(false); // Mark loading as complete
+	}, []);
 
 	useEffect(() => {
 		if (user) {
@@ -42,8 +51,8 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	return (
-		<AuthContext.Provider value={{ user, login, logout }}>
-			{children}
+		<AuthContext.Provider value={{ user, login, logout, loading }}>
+			{!loading && children} {/* Ensures no flickering before authentication check */}
 		</AuthContext.Provider>
 	);
 };
